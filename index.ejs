@@ -1,0 +1,73 @@
+<%- include('partials/header') %>
+
+<main class="main-content">
+
+  <!-- Hero section -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1 class="hero-title">Discover Your<br/><em>Perfect Drink</em></h1>
+      <p class="hero-sub">Search thousands of cocktails or let us surprise you.</p>
+      <a href="/random" class="btn btn-primary">🎲 Surprise Me</a>
+    </div>
+    <div class="hero-accent"></div>
+  </section>
+
+  <!-- Error message (if something went wrong) -->
+  <% if (typeof error !== 'undefined' && error) { %>
+    <div class="error-banner"><%= error %></div>
+  <% } %>
+
+  <!-- Random cocktail card -->
+  <% if (cocktail) { %>
+  <section class="featured">
+    <h2 class="section-label">Tonight's Special</h2>
+
+    <div class="cocktail-card featured-card">
+      <!-- Cocktail image -->
+      <div class="card-image-wrap">
+        <img src="<%= cocktail.image %>/preview" alt="<%= cocktail.name %>" class="card-image" loading="lazy"/>
+        <span class="badge"><%= cocktail.alcoholic %></span>
+      </div>
+
+      <!-- Cocktail info -->
+      <div class="card-body">
+        <h2 class="card-title"><%= cocktail.name %></h2>
+        <p class="card-meta"><%= cocktail.category %> &middot; <%= cocktail.glass %></p>
+
+        <!-- Tags -->
+        <% if (cocktail.tags.length > 0) { %>
+          <div class="tag-list">
+            <% cocktail.tags.forEach(tag => { %>
+              <span class="tag"><%= tag.trim() %></span>
+            <% }) %>
+          </div>
+        <% } %>
+
+        <!-- Ingredients -->
+        <div class="ingredients">
+          <h3 class="sub-heading">Ingredients</h3>
+          <ul class="ingredient-list">
+            <% cocktail.ingredients.forEach(ing => { %>
+              <li>
+                <span class="ing-measure"><%= ing.measure %></span>
+                <span class="ing-name"><%= ing.name %></span>
+              </li>
+            <% }) %>
+          </ul>
+        </div>
+
+        <!-- Instructions preview + full detail link -->
+        <div class="instructions-preview">
+          <h3 class="sub-heading">Instructions</h3>
+          <p><%= cocktail.instructions.substring(0, 180) %><% if (cocktail.instructions.length > 180) { %>…<% } %></p>
+        </div>
+
+        <a href="/cocktail/<%= cocktail.id %>" class="btn btn-secondary">Full Recipe →</a>
+      </div>
+    </div>
+  </section>
+  <% } %>
+
+</main>
+
+<%- include('partials/footer') %>

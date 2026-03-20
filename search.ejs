@@ -1,0 +1,46 @@
+<%- include('partials/header') %>
+
+<main class="main-content">
+
+  <!-- Results header -->
+  <section class="results-header">
+    <h1 class="page-title">
+      <% if (results.length > 0) { %>
+        <%= results.length %> result<%= results.length > 1 ? 's' : '' %> for "<em><%= searchTerm %></em>"
+      <% } else { %>
+        No cocktails found for "<em><%= searchTerm %></em>"
+      <% } %>
+    </h1>
+    <% if (results.length === 0) { %>
+      <p>Try a different name, or <a href="/random" class="inline-link">get a random cocktail</a>.</p>
+    <% } %>
+  </section>
+
+  <!-- Error message -->
+  <% if (typeof error !== 'undefined' && error) { %>
+    <div class="error-banner"><%= error %></div>
+  <% } %>
+
+  <!-- Grid of result cards -->
+  <% if (results.length > 0) { %>
+  <section class="results-grid">
+    <% results.forEach(cocktail => { %>
+      <!-- Each card links to the full detail page -->
+      <a href="/cocktail/<%= cocktail.id %>" class="cocktail-card grid-card">
+        <div class="card-image-wrap">
+          <img src="<%= cocktail.image %>/preview" alt="<%= cocktail.name %>" class="card-image" loading="lazy"/>
+          <span class="badge"><%= cocktail.alcoholic %></span>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title"><%= cocktail.name %></h2>
+          <p class="card-meta"><%= cocktail.category %> &middot; <%= cocktail.glass %></p>
+          <p class="card-ing-count"><%= cocktail.ingredients.length %> ingredients</p>
+        </div>
+      </a>
+    <% }) %>
+  </section>
+  <% } %>
+
+</main>
+
+<%- include('partials/footer') %>

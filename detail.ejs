@@ -1,0 +1,61 @@
+<%- include('partials/header') %>
+
+<main class="main-content detail-page">
+
+  <a href="javascript:history.back()" class="back-link">← Back</a>
+
+  <div class="detail-layout">
+
+    <!-- Left column: image + meta -->
+    <aside class="detail-aside">
+      <div class="detail-image-wrap">
+        <img src="<%= cocktail.image %>" alt="<%= cocktail.name %>" class="detail-image"/>
+      </div>
+      <div class="detail-meta-box">
+        <div class="meta-row"><span class="meta-label">Category</span><span><%= cocktail.category %></span></div>
+        <div class="meta-row"><span class="meta-label">Glass</span><span><%= cocktail.glass %></span></div>
+        <div class="meta-row"><span class="meta-label">Type</span><span class="badge"><%= cocktail.alcoholic %></span></div>
+        <% if (cocktail.tags.length > 0) { %>
+          <div class="meta-row tag-row">
+            <span class="meta-label">Tags</span>
+            <div class="tag-list">
+              <% cocktail.tags.forEach(tag => { %>
+                <span class="tag"><%= tag.trim() %></span>
+              <% }) %>
+            </div>
+          </div>
+        <% } %>
+      </div>
+    </aside>
+
+    <!-- Right column: name, ingredients, instructions -->
+    <div class="detail-main">
+      <h1 class="detail-title"><%= cocktail.name %></h1>
+
+      <h2 class="sub-heading">Ingredients</h2>
+      <ul class="ingredient-list full">
+        <% cocktail.ingredients.forEach(ing => { %>
+          <li>
+            <span class="ing-measure"><%= ing.measure %></span>
+            <span class="ing-name"><%= ing.name %></span>
+          </li>
+        <% }) %>
+      </ul>
+
+      <h2 class="sub-heading">How to Make It</h2>
+      <!-- Split instructions by sentence for readability -->
+      <div class="instructions-full">
+        <% cocktail.instructions.split(/(?<=[.!?])\s+/).forEach(sentence => { %>
+          <p><%= sentence %></p>
+        <% }) %>
+      </div>
+
+      <!-- Another random cocktail button -->
+      <a href="/random" class="btn btn-primary" style="margin-top:2rem;">🎲 Try Another</a>
+    </div>
+
+  </div>
+
+</main>
+
+<%- include('partials/footer') %>
